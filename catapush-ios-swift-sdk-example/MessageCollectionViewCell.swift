@@ -15,6 +15,7 @@ class MessageCollectionViewCell : UICollectionViewCell {
     static var cornerRadius:CGFloat = 5
     static var borderWidth:CGFloat = 0.5
     static var borderColor:UIColor = UIColor(white: 0, alpha: 0.2)
+    static var backgroundColor:UIColor = UIColor.whiteColor()
     static var textColor = UIColor(red: 68.0/255.0, green: 68.0/255.0, blue: 68.0/255.0, alpha: 1)
 
     @IBOutlet weak var messageTextView: UITextView!
@@ -23,8 +24,6 @@ class MessageCollectionViewCell : UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.layer.backgroundColor = UIColor.clearColor().CGColor
-   //     self.messageTextView.layer.borderWidth = MessageCollectionViewCell.borderWidth
-    //    self.messageTextView.layer.borderColor = MessageCollectionViewCell.borderColor.CGColor
     
     }
     
@@ -34,6 +33,7 @@ class MessageCollectionViewCell : UICollectionViewCell {
         self.messageTextView.layer.borderColor = MessageCollectionViewCell.borderColor.CGColor
         self.messageTextView.layer.cornerRadius = MessageCollectionViewCell.cornerRadius
         self.messageTextView.layer.masksToBounds = true
+        self.messageTextView.layer.backgroundColor = MessageCollectionViewCell.backgroundColor.CGColor
         self.messageTextView.textColor = MessageCollectionViewCell.textColor
         self.messageTextView.font = MessageCollectionViewCell.textFont
     }

@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,CatapushDelegate,MessagesD
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        Catapush.setAppKey("1936ff755bc74f186c9ed888d573fcc9")
+        Catapush.setAppKey("YOU_APP_KEY")
         Catapush.startWithIdentifier("test", andPassword: "test")
         Catapush.setupCatapushStateDelegate(self, andMessagesDispatcherDelegate: self)
         
@@ -27,7 +27,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,CatapushDelegate,MessagesD
                     // Wake up, it's Catapush!
                 }
             }
-
         }
         
         if NSProcessInfo().operatingSystemVersion.majorVersion > 8 {
@@ -38,8 +37,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,CatapushDelegate,MessagesD
         }
         
         application.applicationIconBadgeNumber = 0;
-        
-       
         return true
     }
 
