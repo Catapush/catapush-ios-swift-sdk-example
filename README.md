@@ -14,7 +14,7 @@ This project shows how quickly Catapush iOS SDK can be integrated into your curr
 
 
 1. git clone https://github.com/Catapush/catapush-ios-swift-sdk-example.git
-2. cd catapush-ios-sdk-example
+2. cd catapush-ios-sdk-swift-example
 3. pod install
 4. open catapush-ios-sdk-example.xcworkspace
 5. Get your App Key from [Catapush Dashboard](http://www.catapush.com) and insert it together with a couple of credentials of your choice into your application delegate application:didFinishLaunchingWithOption:
@@ -37,8 +37,16 @@ Read the following documentation to enable push notification: [Catapush - Apple 
 Easily configure the UI appearance by changing TextFont, Background color attributes.
 
 ```ruby
- ..
-    
+	MessageCollectionViewCell.cornerRadius = 10
+  	MessageCollectionViewCell.borderColor = UIColor(white:0,alpha:0.2)
+    MessageCollectionViewCell.borderWidth = 0.5
+    MessageCollectionViewCell.textColor = UIColor.whiteColor()
+    MessageCollectionViewCell.backgroundColor = UIColor.lightGrayColor()
+    MessageCollectionViewCell.textFont = UIFont(name:"HelveticaNeue",size:18)!
+    UINavigationBar.appearance().barTintColor = UIColor.redColor()
+    UINavigationBar.appearance().titleTextAttributes = [ 
+    		NSForegroundColorAttributeName	: UIColor.greenColor(),
+            NSFontAttributeName				: UIFont(name:"HelveticaNeue-CondensedBlack", size:21.0)!];
 ```
 ###Example
 The following code shows how to change the appearance of the message bubbles and the navigation bar:
@@ -47,9 +55,26 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
   
      // ...
 
-  
-    
- 
+    MessageCollectionViewCell.cornerRadius = 2
+    MessageCollectionViewCell.borderColor = UIColor(white:0,alpha:0.2)
+   	MessageCollectionViewCell.borderWidth = 0.5
+   	MessageCollectionViewCell.textColor = UIColor.whiteColor()
+    MessageCollectionViewCell.backgroundColor = UIColor.lightGrayColor()
+        
+    let shadow = NSShadow()
+    shadow.shadowColor = UIColor(white:0,alpha:0.8)
+    shadow.shadowOffset = CGSizeMake(0, 1)
+        
+    UINavigationBar.appearance().barTintColor = UIColor.redColor()
+    UINavigationBar.appearance().titleTextAttributes = [
+            
+            NSForegroundColorAttributeName: UIColor(red:245.0/255.0,green:245.0/255.0,blue:255.0/255.0,alpha:1),
+            NSFontAttributeName           : UIFont(name:"HelveticaNeue-CondensedBlack", size:21.0)!,
+            NSShadowAttributeName         : shadow
+            
+        ]
+
+  	return true
 
 }
 ```
