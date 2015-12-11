@@ -48,9 +48,7 @@ class ViewController: UIViewController,UICollectionViewDataSource,UICollectionVi
             forIndexPath: indexPath) as! MessageCollectionViewCell
         let messageIP = self.fetchedResultsController.objectAtIndexPath(indexPath) as! MessageIP
         messageCell.messageTextView.text = messageIP.body
-        print("sendtime:\(messageIP.sendTime)")
         if let previousDate = self.previousDate(messageIP, indexPath: indexPath) {
-            print("previousDate:\(previousDate)")
             messageCell.setTimestamp(previousDate)
         }
         return messageCell
