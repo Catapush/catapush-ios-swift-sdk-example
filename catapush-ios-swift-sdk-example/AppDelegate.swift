@@ -7,42 +7,115 @@
 //
 
 import UIKit
+import Foundation
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate,CatapushDelegate,MessagesDispatchDelegate,UIAlertViewDelegate {
 
     var window: UIWindow?
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        Catapush.setAppKey("1936ff755bc74f186c9ed888d573fcc9")
+        Catapush.startWithIdentifier("test", andPassword: "test")
+        Catapush.setupCatapushStateDelegate(self, andMessagesDispatcherDelegate: self)
+        
+        if let loptions = launchOptions { 
+             let remoteNotification = loptions[UIApplicationLaunchOptionsRemoteNotificationKey]
+            if case let sender as String = remoteNotification!["sender"] {
+                if sender == "catapush" {
+                    // Wake up, it's Catapush!
+                }
+            }
 
+        }
         
+        if NSProcessInfo().operatingSystemVersion.majorVersion > 8 {
+            let notificationSettings = UIUserNotificationSettings(forTypes: [.Sound,.Alert,.Badge], categories: [])
+            application.registerUserNotificationSettings(notificationSettings)
+        } else {
+            application.registerForRemoteNotificationTypes([.Sound,.Alert,.Badge])
+        }
         
+        application.applicationIconBadgeNumber = 0;
+        
+       
         return true
     }
 
+    
+    
+    
     func applicationWillResignActive(application: UIApplication) {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+        
     }
 
     func applicationDidEnterBackground(application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        Catapush.applicationDidEnterBackground(application)
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
-        // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+        Catapush.applicationWillEnterForeground(application)
     }
 
     func applicationDidBecomeActive(application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        Catapush.applicationDidBecomeActive(application)
     }
 
     func applicationWillTerminate(application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        Catapush.applicationWillTerminate(application)
     }
 
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        Catapush.registerForRemoteNotificationsWithDeviceToken(deviceToken)
+    }
+    
+    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+        print("Did Fail Register Notification",error)
+    }
+    
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
+        CatapushRemoteNotifications.application(application,
+            didReceiveRemoteNotification: userInfo,
+            fetchCompletionHandler: completionHandler)
+    }
+    
+    func catapushDidConnectSuccessfully(catapush: Catapush!) {
+         let connectedAV = UIAlertView( title: "Connected",
+                                        message: "Catapush Connected",
+                                        delegate: self,
+                                        cancelButtonTitle: "Ok")
+        connectedAV.show()
+    }
+    
+    
+    func catapush(catapush: Catapush!, didFailOperation operationName: String!, withError error: NSError!) {
+        if error.domain == CATAPUSH_ERROR_DOMAIN {
+            print("Error code:\(error.code)")
+        }
+        let errorMessage = "The operation " + operationName + " is failed with error " + error.localizedDescription
+        let flowErrorAlertView = UIAlertView(title: "Error", message: errorMessage, delegate: self, cancelButtonTitle: "Ok")
+        flowErrorAlertView.show()
+    }
 
+    func libraryDidReceiveMessageIP(messageIP: MessageIP!) {
+        MessageIP.sendMessageReadNotification(messageIP)
+        for message in Catapush.allMessages() {
+            print("Message: \(message.body)")
+        }
+    }
+    
+    
+    /**
+    
+        Customize appearance of message bubbles
+
+    */
+    
+
+    
+    
+
+  
 }
 
