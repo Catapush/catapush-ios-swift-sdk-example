@@ -43,8 +43,8 @@ Easily configure the UI appearance by changing TextFont, Background color attrib
     MessageCollectionViewCell.textColor = UIColor.whiteColor()
     MessageCollectionViewCell.backgroundColor = UIColor.lightGrayColor()
     MessageCollectionViewCell.textFont = UIFont(name:"HelveticaNeue",size:18)!
-    UINavigationBar.appearance().barTintColor = UIColor.redColor()
-    UINavigationBar.appearance().titleTextAttributes = [ 
+    MessageNavigationBar.barTintColor = UIColor.redColor()
+    MessageNavigationBar.titleTextAttributes = [ 
     		NSForegroundColorAttributeName	: UIColor.greenColor(),
             NSFontAttributeName				: UIFont(name:"HelveticaNeue-CondensedBlack", size:21.0)!];
 ```
