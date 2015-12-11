@@ -15,6 +15,7 @@
 		9DB47C831C19B12600E49771 /* MessageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB47C821C19B12600E49771 /* MessageCollectionViewCell.swift */; };
 		9DB47C851C19BEE300E49771 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB47C841C19BEE300E49771 /* Constants.swift */; };
 		9DFABD9B1C1B07B70074BB1D /* MessageCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFABD9A1C1B07B70074BB1D /* MessageCollectionView.swift */; };
+		9DFABD9D1C1B283F0074BB1D /* MessageNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFABD9C1C1B283F0074BB1D /* MessageNavigationBar.swift */; };
 		E3115C3B0DE42FDA997F74CC /* libPods-catapush-ios-swift-sdk-example.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B5313E40EA4676E6058BFE1 /* libPods-catapush-ios-swift-sdk-example.a */; };
 /* End PBXBuildFile section */
 
@@ -32,6 +33,7 @@
 		9DB47C821C19B12600E49771 /* MessageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageCollectionViewCell.swift; sourceTree = "<group>"; };
 		9DB47C841C19BEE300E49771 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		9DFABD9A1C1B07B70074BB1D /* MessageCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageCollectionView.swift; sourceTree = "<group>"; };
+		9DFABD9C1C1B283F0074BB1D /* MessageNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageNavigationBar.swift; sourceTree = "<group>"; };
 		E42BE7840CBBA428B7969ED5 /* Pods-catapush-ios-swift-sdk-example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-catapush-ios-swift-sdk-example.release.xcconfig"; path = "Pods/Target Support Files/Pods-catapush-ios-swift-sdk-example/Pods-catapush-ios-swift-sdk-example.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -102,6 +104,7 @@
 			children = (
 				9DB47C821C19B12600E49771 /* MessageCollectionViewCell.swift */,
 				9DFABD9A1C1B07B70074BB1D /* MessageCollectionView.swift */,
+				9DFABD9C1C1B283F0074BB1D /* MessageNavigationBar.swift */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -248,6 +251,7 @@
 				9D10DD8A1C1986C7009E610E /* AppDelegate.swift in Sources */,
 				9DB47C831C19B12600E49771 /* MessageCollectionViewCell.swift in Sources */,
 				9DB47C851C19BEE300E49771 /* Constants.swift in Sources */,
+				9DFABD9D1C1B283F0074BB1D /* MessageNavigationBar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

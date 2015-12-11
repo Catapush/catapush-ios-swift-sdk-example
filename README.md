@@ -65,8 +65,8 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
     shadow.shadowColor = UIColor(white:0,alpha:0.8)
     shadow.shadowOffset = CGSizeMake(0, 1)
         
-    UINavigationBar.appearance().barTintColor = UIColor.redColor()
-    UINavigationBar.appearance().titleTextAttributes = [
+    MessageNavigationBar.barTintColor = UIColor.redColor()
+    MessageNavigationBar.titleTextAttributes = [
             
             NSForegroundColorAttributeName: UIColor(red:245.0/255.0,green:245.0/255.0,blue:255.0/255.0,alpha:1),
             NSFontAttributeName           : UIFont(name:"HelveticaNeue-CondensedBlack", size:21.0)!,
