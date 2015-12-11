@@ -64,7 +64,6 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
     let shadow = NSShadow()
     shadow.shadowColor = UIColor(white:0,alpha:0.8)
     shadow.shadowOffset = CGSizeMake(0, 1)
-        
     MessageNavigationBar.barTintColor = UIColor.redColor()
     MessageNavigationBar.titleTextAttributes = [
             
