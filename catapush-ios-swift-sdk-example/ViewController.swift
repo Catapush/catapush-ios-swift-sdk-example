@@ -47,7 +47,7 @@ class ViewController: UIViewController,UICollectionViewDataSource,UICollectionVi
             Constants.View.MessageCollectionViewCellId,
             forIndexPath: indexPath) as! MessageCollectionViewCell
         let messageIP = self.fetchedResultsController.objectAtIndexPath(indexPath) as! MessageIP
-        messageCell.messageTextView.text = messageIP.body
+        messageCell.messageTextView.text = messageIP.body()
         if let previousDate = self.previousDate(messageIP, indexPath: indexPath) {
             messageCell.setTimestamp(previousDate)
         }
@@ -58,7 +58,7 @@ class ViewController: UIViewController,UICollectionViewDataSource,UICollectionVi
         let messageIP = self.fetchedResultsController.objectAtIndexPath(indexPath) as! MessageIP
         let size = CGSizeMake(collectionView.frame.size.width,CGFloat.max)
         let showTimestamp:Bool = (self.previousDate(messageIP, indexPath: indexPath) != nil)
-        let cellSize = MessageCollectionViewCell.sizeThatFits(size,text:messageIP.body,showTimestamp:showTimestamp)
+        let cellSize = MessageCollectionViewCell.sizeThatFits(size,text:messageIP.body(),showTimestamp:showTimestamp)
         return CGSizeMake(self.collectionView.frame.size.width, cellSize.height)
     }
     
@@ -78,7 +78,7 @@ class ViewController: UIViewController,UICollectionViewDataSource,UICollectionVi
         if messageIP.status.integerValue == MESSAGEIP_STATUS.MessageIP_NOT_READ.rawValue {
             messageIP.status = NSNumber(integer: MESSAGEIP_STATUS.MessageIP_READ.rawValue)
             MessageIP.sendMessageReadNotification(messageIP)
-            print("Sending reading notification for message with id: \(messageIP.identifier)")
+
         }
     }
     
@@ -105,15 +105,15 @@ class ViewController: UIViewController,UICollectionViewDataSource,UICollectionVi
     func previousDate(message:MessageIP,indexPath:NSIndexPath) -> NSDate! {
         if (indexPath.item > 0) {
             let prevIndex = NSIndexPath(forItem:indexPath.row - 1,inSection:indexPath.section)
-            let prevMsg = self.fetchedResultsController.objectAtIndexPath(prevIndex)
-            let timeGap:NSTimeInterval = message.sendTime.timeIntervalSinceDate(prevMsg.sendTime)
+            let prevMsg:MessageIP = self.fetchedResultsController.objectAtIndexPath(prevIndex) as! MessageIP
+            let timeGap:NSTimeInterval = message.sentTime().timeIntervalSinceDate(prevMsg.sentTime())
             if timeGap/60 > 5 {
-                return message.sendTime;
+                return message.sentTime();
             } else {
                 return nil
             }
         }
-        return message.sendTime
+        return message.sentTime()
     }
 }
 
