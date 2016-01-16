@@ -19,7 +19,7 @@ class ViewController: UIViewController,UICollectionViewDataSource,UICollectionVi
 
     lazy var fetchedResultsController:NSFetchedResultsController = {
         let request = NSFetchRequest(entityName: "MessageIP")
-        request.sortDescriptors = [NSSortDescriptor(key: "sendTime", ascending: true)]
+        request.sortDescriptors = [NSSortDescriptor(key: "sentTime", ascending: true)]
         let frc = NSFetchedResultsController(fetchRequest: request, managedObjectContext: self.managedObjectContext,sectionNameKeyPath:nil,cacheName:nil)
         return frc
     }()
