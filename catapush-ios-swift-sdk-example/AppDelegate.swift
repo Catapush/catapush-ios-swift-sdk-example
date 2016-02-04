@@ -62,6 +62,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate,CatapushDelegate,MessagesD
     func applicationWillTerminate(application: UIApplication) {
         Catapush.applicationWillTerminate(application)
     }
+    
+    func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
+        application.registerForRemoteNotifications()
+    }
 
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         Catapush.registerForRemoteNotificationsWithDeviceToken(deviceToken)
