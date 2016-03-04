@@ -57,7 +57,7 @@ class MessageCollectionViewCell : UICollectionViewCell {
     
     func setTimestamp(date:NSDate)  {
         let dateFormatter  = NSDateFormatter()
-        dateFormatter.dateFormat = "MM-dd HH:mm"
+        dateFormatter.dateFormat = "YYYY/MM/dd HH:mm"
         topTimestampLabel.text = dateFormatter.stringFromDate(date)
     }
     
