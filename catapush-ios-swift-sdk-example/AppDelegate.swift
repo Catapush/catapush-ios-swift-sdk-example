@@ -16,35 +16,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate,CatapushDelegate,MessagesD
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        Catapush.setAppKey("YOU_APP_KEY")
+
+        Catapush.setAppKey("xxxxxxxxxxxxxxxxxxxxxxxxxxx")
+      
+        Catapush.registerUserNotification(self, voIPDelegate: nil)
+        
         Catapush.startWithIdentifier("test", andPassword: "test")
+        
         Catapush.setupCatapushStateDelegate(self, andMessagesDispatcherDelegate: self)
-        
-        if let loptions = launchOptions { 
-             let remoteNotification = loptions[UIApplicationLaunchOptionsRemoteNotificationKey]
-            if case let sender as String = remoteNotification!["sender"] {
-                if sender == "catapush" {
-                    // Wake up, it's Catapush!
-                }
-            }
-        }
-        
-        if NSProcessInfo().operatingSystemVersion.majorVersion > 8 {
-            let notificationSettings = UIUserNotificationSettings(forTypes: [.Sound,.Alert,.Badge], categories: [])
-            application.registerUserNotificationSettings(notificationSettings)
-        } else {
-            application.registerForRemoteNotificationTypes([.Sound,.Alert,.Badge])
-        }
         
         application.applicationIconBadgeNumber = 0;
         return true
-    }
-
-    
-    
-    
-    func applicationWillResignActive(application: UIApplication) {
-        
     }
 
     func applicationDidEnterBackground(application: UIApplication) {
@@ -64,21 +46,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate,CatapushDelegate,MessagesD
     }
     
     func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
-        application.registerForRemoteNotifications()
+         // Custom code (can be empty)
     }
 
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
-        Catapush.registerForRemoteNotificationsWithDeviceToken(deviceToken)
+         // Custom code (can be empty)
     }
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
-        print("Did Fail Register Notification",error)
+        // Custom code (can be empty)
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
-        CatapushRemoteNotifications.application(application,
-            didReceiveRemoteNotification: userInfo,
-            fetchCompletionHandler: completionHandler)
+        // Custom code (can be empty)
     }
     
     func catapushDidConnectSuccessfully(catapush: Catapush!) {
@@ -88,7 +68,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,CatapushDelegate,MessagesD
                                         cancelButtonTitle: "Ok")
         connectedAV.show()
     }
-    
     
     func catapush(catapush: Catapush!, didFailOperation operationName: String!, withError error: NSError!) {
         if error.domain == CATAPUSH_ERROR_DOMAIN {
@@ -105,18 +84,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate,CatapushDelegate,MessagesD
             print("Message: \(message.body)")
         }
     }
-    
-    
-    /**
-    
-        Customize appearance of message bubbles
-
-    */
-    
-
-    
-    
-
-  
 }
 

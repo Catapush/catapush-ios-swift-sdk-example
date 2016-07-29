@@ -367,10 +367,16 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"CATAPUSH_LOG=1",
+				);
 				INFOPLIST_FILE = "catapush-ios-swift-sdk-example/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.catapush.ios.swift.example.catapush-ios-swift-sdk-example";
+				PRODUCT_BUNDLE_IDENTIFIER = com.catapush.github.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "3215d96a-b15e-49bc-b8ac-d2acc2c0bc61";
 			};
 			name = Debug;
 		};
@@ -383,8 +389,9 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "catapush-ios-swift-sdk-example/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.catapush.ios.swift.example.catapush-ios-swift-sdk-example";
+				PRODUCT_BUNDLE_IDENTIFIER = com.catapush.github.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "3215d96a-b15e-49bc-b8ac-d2acc2c0bc61";
 			};
 			name = Release;
 		};
