@@ -38,7 +38,6 @@ class MessageCollectionViewCell : UICollectionViewCell {
         self.messageTextView.font = MessageCollectionViewCell.textFont
     }
     
-    
     static func sizeThatFits(size: CGSize,text:String,showTimestamp:Bool) -> CGSize {
         let messageTextView = UITextView()
         messageTextView.font = MessageCollectionViewCell.textFont
@@ -49,25 +48,16 @@ class MessageCollectionViewCell : UICollectionViewCell {
         } else {
             return s
         }
-        //
-
     }
-    
-    
     
     func setTimestamp(date:NSDate)  {
         let dateFormatter  = NSDateFormatter()
-        dateFormatter.dateFormat = "MM-dd HH:mm"
+        dateFormatter.dateFormat = "YYYY/MM/dd HH:mm"
         topTimestampLabel.text = dateFormatter.stringFromDate(date)
     }
-    
-    
     
     override func prepareForReuse() {
         super.prepareForReuse()
         self.topTimestampLabel.text = nil
     }
-    
-    
-    
 }

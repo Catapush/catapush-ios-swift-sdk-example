@@ -96,8 +96,7 @@ class ViewController: UIViewController,UICollectionViewDataSource,UICollectionVi
             self.collectionView.reloadData()
         }
     }
-    
-    
+  
     /**
         Return previous date of message is 5 min
     

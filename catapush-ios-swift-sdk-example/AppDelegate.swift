@@ -11,14 +11,14 @@ import Foundation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate,CatapushDelegate,MessagesDispatchDelegate,UIAlertViewDelegate {
-
+    
     var window: UIWindow?
-
-
+    
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-
+        
         Catapush.setAppKey("xxxxxxxxxxxxxxxxxxxxxxxxxxx")
-      
+        
         Catapush.registerUserNotification(self, voIPDelegate: nil)
         
         Catapush.startWithIdentifier("test", andPassword: "test")
@@ -28,29 +28,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate,CatapushDelegate,MessagesD
         application.applicationIconBadgeNumber = 0;
         return true
     }
-
+    
     func applicationDidEnterBackground(application: UIApplication) {
         Catapush.applicationDidEnterBackground(application)
     }
-
+    
     func applicationWillEnterForeground(application: UIApplication) {
         Catapush.applicationWillEnterForeground(application)
     }
-
+    
     func applicationDidBecomeActive(application: UIApplication) {
         Catapush.applicationDidBecomeActive(application)
     }
-
+    
     func applicationWillTerminate(application: UIApplication) {
         Catapush.applicationWillTerminate(application)
     }
     
     func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
-         // Custom code (can be empty)
+        // Custom code (can be empty)
     }
-
+    
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
-         // Custom code (can be empty)
+        // Custom code (can be empty)
     }
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
@@ -62,10 +62,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate,CatapushDelegate,MessagesD
     }
     
     func catapushDidConnectSuccessfully(catapush: Catapush!) {
-         let connectedAV = UIAlertView( title: "Connected",
-                                        message: "Catapush Connected",
-                                        delegate: self,
-                                        cancelButtonTitle: "Ok")
+        let connectedAV = UIAlertView( title: "Connected",
+                                       message: "Catapush Connected",
+                                       delegate: self,
+                                       cancelButtonTitle: "Ok")
         connectedAV.show()
     }
     
@@ -77,7 +77,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,CatapushDelegate,MessagesD
         let flowErrorAlertView = UIAlertView(title: "Error", message: errorMessage, delegate: self, cancelButtonTitle: "Ok")
         flowErrorAlertView.show()
     }
-
+    
     func libraryDidReceiveMessageIP(messageIP: MessageIP!) {
         MessageIP.sendMessageReadNotification(messageIP)
         for message in Catapush.allMessages() {
