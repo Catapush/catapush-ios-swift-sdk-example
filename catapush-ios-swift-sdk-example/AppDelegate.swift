@@ -16,8 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,CatapushDelegate,MessagesD
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        Catapush.setAppKey("YOU_APP_KEY")
-        Catapush.startWithIdentifier("test", andPassword: "test")
+        Catapush.setAppKey("bce7c80f45ace7dbe07888a4198c2ac6")
+        Catapush.startWithIdentifier("test-ios", andPassword: "test-ios")
         Catapush.setupCatapushStateDelegate(self, andMessagesDispatcherDelegate: self)
         
         if let loptions = launchOptions { 

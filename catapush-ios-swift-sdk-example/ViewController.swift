@@ -96,6 +96,7 @@ class ViewController: UIViewController,UICollectionViewDataSource,UICollectionVi
             self.collectionView.reloadData()
         }
     }
+  
     
     
     /**
