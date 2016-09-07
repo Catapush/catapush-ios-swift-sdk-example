@@ -16,7 +16,7 @@ This project shows how quickly Catapush iOS SDK can be integrated into your curr
 1. git clone https://github.com/Catapush/catapush-ios-swift-sdk-example.git
 2. cd catapush-ios-swift-sdk-example
 3. pod install 
-4. open catapush-ios-sdk-example.xcworkspace
+4. open catapush-ios-swift-sdk-example.xcworkspace
 5. Get your App Key from [Catapush Dashboard](http://www.catapush.com) and insert it together with a couple of credentials of your choice into your application delegate application:didFinishLaunchingWithOption:
 ```ruby
  func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
