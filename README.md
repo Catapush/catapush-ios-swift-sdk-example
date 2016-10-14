@@ -13,11 +13,11 @@ This project shows how quickly Catapush iOS SDK can be integrated into your curr
 ##Usage
 
 
-1. git clone https://github.com/Catapush/catapush-ios-swift-sdk-example.git
-2. cd catapush-ios-swift-sdk-example
-3. pod install
-4. open catapush-ios-swift-sdk-example.xcworkspace
-5. Get your App Key from [Catapush Dashboard](http://www.catapush.com) and insert it together with a couple of credentials of your choice into your application delegate application:didFinishLaunchingWithOption:
+* git clone https://github.com/Catapush/catapush-ios-swift-sdk-example.git
+* cd catapush-ios-swift-sdk-example
+* pod install
+* open catapush-ios-swift-sdk-example.xcworkspace
+* Get your App Key from [Catapush Dashboard](http://www.catapush.com) and insert it together with a couple of credentials of your choice into your application delegate application:didFinishLaunchingWithOption:
 ```ruby
  func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
@@ -32,8 +32,8 @@ This project shows how quickly Catapush iOS SDK can be integrated into your curr
         return true
  }
 ```
-6. Run the app
-7. Back to your [Catapush Dashboard](http://www.catapush.com) and send some important message.
+* Run the app
+* Back to your [Catapush Dashboard](http://www.catapush.com) and send some important message.
 
 This example allows to receive VoIP push notification. A VoIP Push Notification Certificate has to be associated to this app. If you set ```voIPDelegate``` to ```nil``` of the method ```registerUserNotification:self voIPDelegate:```, then Catapush Library will not call ```didReceiveIncomingPushWithPayload/1``` and will display an alert message and will play a default sound when a notification is received.
 
