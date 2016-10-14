@@ -35,6 +35,13 @@ This project shows how quickly Catapush iOS SDK can be integrated into your curr
 6. Run the app
 7. Back to your [Catapush Dashboard](http://www.catapush.com) and send some important message.
 
+The method ```registerUserNotification/2``` requests registration for remote notification. If VoIP background mode in an app
+is enabled in XCode capabilites, then the method requests a registration for VoIP notification.
+
+Note: Catapush DOES register user notification for you, so DO NOT register user notification by calling instance method  ```registerUserNotificationSettings/1``` of ```UIApplication```.
+
+
+
 
 #Prerequisites
 ##Enabling Voice Over IP Push Notifications
