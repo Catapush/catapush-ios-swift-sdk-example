@@ -45,6 +45,10 @@ Note: Catapush DOES register user notification for you, so DO NOT register user 
 
 
 #Prerequisites
+You must enable the right capabilites in your Xcode project and create a certificate for your VoIP app. Each VoIP app requires its own individual VoIP Services certificate, mapped to a unique App ID. This certificate allows your notification server to connect to the VoIP service. Visit the Apple Developer Member Center and create a new VoIP Services Certificate.
+
+![alt tag](https://github.com/Catapush/catapush-ios-sdk-example/blob/master/voip_certificate_creation_2x.png)
+
 ##Enabling Voice Over IP Push Notifications
 Set the following capabilites in your XCode project:
 
@@ -52,13 +56,6 @@ Set the following capabilites in your XCode project:
 
 ![alt tag](https://github.com/Catapush/catapush-ios-sdk-pod/blob/master/capabilities_xcode.png)
 
-If VoIP is enabled, Catapush library will display alert message and play default sound when a notification is received
-(you don't need to write code for showing alert message).
-If you want to use standard notification just select ```Remote Notification``` (and unselect Voip).
-
-The 2nd argument of the method ```registerUserNotification/2``` is a ```VoIPNotificationDelegate``` delegate.
-The protocol ```VoIPNotificationDelegate``` has one method ```didReceiveIncomingPushWithPayload:(PKPushPayload *)payload``` called when a notification is received.  You can implement this method, and write your custom code, but  Catapush
-library will not display any alert or play a sound when a notification is received.
 
 ##Certificate, App Id, and Entitlements
 These are pre-requisites for setting up VoIP with Catapush.
@@ -71,7 +68,7 @@ These are pre-requisites for setting up VoIP with Catapush.
 * Upload the exported .p12 file into your Catapush Application ("Platform" menu item).
 
 
-##Additional Documentation
+##Advanced
 Please, read the following documentation to enable push notification: [Catapush - Apple APNs Push Notification setup manual](http://www.catapush.com/docs-ios?__hssc=240266844.6.1447949295248&__hstc=240266844.8906dd1311d28178e3c8bdbb3bf2886a.1447404199228.1447945741012.1447949295248.9&hsCtaTracking=315ccd2b-1bb0-4020-b9f9-8b8dec529f1f|efb89882-78ec-4125-9441-59cdfd6082b2).
 
 
