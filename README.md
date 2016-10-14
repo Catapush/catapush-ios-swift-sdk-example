@@ -46,9 +46,6 @@ Note: Catapush DOES register user notification for you, so DO NOT register user 
 
 #Prerequisites
 You must enable the right capabilites in your Xcode project and create a certificate for your VoIP app. Each VoIP app requires its own individual VoIP Services certificate, mapped to a unique App ID. This certificate allows your notification server to connect to the VoIP service. Visit the Apple Developer Member Center and create a new VoIP Services Certificate.
-
-![alt tag](https://github.com/Catapush/catapush-ios-sdk-example/blob/master/voip_certificate_creation_2x.png)
-
 ##Enabling Voice Over IP Push Notifications
 Set the following capabilites in your XCode project:
 
