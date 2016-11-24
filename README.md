@@ -15,7 +15,7 @@ This project shows how quickly Catapush iOS SDK can be integrated into your curr
 1. sudo gem install cocoapods (IMPORTANT: run it also if you have already installed cocoapods)
 2. git clone https://github.com/Catapush/catapush-ios-swift-sdk-example.git
 3. cd catapush-ios-swift-sdk-example
-4. pod install
+4. pod install (this works only if you are NOT using use_frameworks! for more info look below)
 5. open catapush-ios-swift-sdk-example.xcworkspace
 6. Get your App Key from [Catapush Dashboard](http://www.catapush.com) from the left menu in "Your APP" -> App details 
 7. Create the first user from "Your APP" -> User
@@ -114,3 +114,36 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
 Use Long tap to copy a text into clipboard.
 
 ![alt tag](https://github.com/Catapush/catapush-ios-swift-sdk-example/blob/master/catapush_screen_shot_clipboard.jpg)
+
+## Manual library integration when using use_frameworks!
+Since our library isn't a framework you cannot ```use use_frameworks!``` in your Podfile, if you have to use this flag you have to include the library manually following this steps:
+
+*ATTENTION*: this steps doesn't works in our example project, you have to create a new empty project or include it in your project
+
+1. cd ~
+2. git clone git@github.com:Catapush/catapush-ios-sdk-pod.git
+3. open your project in XCode
+4. From Finder drag this files in your project root, when asked select "Copy items if needed"
+    * catapush-ios-sdk-pod/CatapushKit/libCatapushLib.a
+    * catapush-ios-sdk-pod/CatapushKit/CatapushHeaders.h
+    * catapush-ios-sdk-pod/CatapushKit/CatapushLibBundle.bundle
+
+5. Add Dependencies
+From Project settings, select your target, and go to the "Build Phases" tab. Under "Link Binary With Libraries" use the + button to add the following Frameworks to your project:
+* Security.framework
+* CFNetwork.framework
+* SystemConfiguration.framework
+* CoreData.framework
+* libresolv
+
+6. From XCode create a new File -> header, call it <projectname>-Bridging-Header.h and add 
+```#import "CatapushHeaders.h"```  like
+https://raw.githubusercontent.com/Catapush/catapush-ios-swift-sdk-example/master/catapush-ios-swift-sdk-example-Bridging-Header.h
+
+7. Set Build Settings
+Go ahead to "Build Settings", select "All" tab
+* Find "Linking" section and fill "Other Linker Flags" with:
+    -ObjC -lxml2
+* Find "Swift Compiler - General" and fill "Objective-C Bridging Header" with <projectname>-Bridging-Header.h
+
+8. You can copy/paste the AppDelegate from https://raw.githubusercontent.com/Catapush/catapush-ios-swift-sdk-example/master/catapush-ios-swift-sdk-example/AppDelegate.swift to your project
