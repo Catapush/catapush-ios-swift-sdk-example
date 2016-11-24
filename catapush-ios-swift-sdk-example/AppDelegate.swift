@@ -11,17 +11,18 @@ import Foundation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate,CatapushDelegate,MessagesDispatchDelegate,UIAlertViewDelegate {
+   
     
     var window: UIWindow?
     
     
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        Catapush.setAppKey("xxxxxxxxxxxxxxxxxxxxxxxxxxx")
+        Catapush.setAppKey("xxxxxxxxxxxxxx")
         
         Catapush.registerUserNotification(self, voIPDelegate: nil)
         
-        Catapush.startWithIdentifier("test", andPassword: "test")
+        Catapush.start(withIdentifier: "test", andPassword: "test")
         
         Catapush.setupCatapushStateDelegate(self, andMessagesDispatcherDelegate: self)
         
@@ -29,39 +30,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate,CatapushDelegate,MessagesD
         return true
     }
     
-    func applicationDidEnterBackground(application: UIApplication) {
+    func applicationDidEnterBackground(_ application: UIApplication) {
         Catapush.applicationDidEnterBackground(application)
     }
     
-    func applicationWillEnterForeground(application: UIApplication) {
+    func applicationWillEnterForeground(_ application: UIApplication) {
         Catapush.applicationWillEnterForeground(application)
     }
     
-    func applicationDidBecomeActive(application: UIApplication) {
+    func applicationDidBecomeActive(_ application: UIApplication) {
         Catapush.applicationDidBecomeActive(application)
     }
     
-    func applicationWillTerminate(application: UIApplication) {
+    func applicationWillTerminate(_ application: UIApplication) {
         Catapush.applicationWillTerminate(application)
     }
     
-    func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
+    func application(_ application: UIApplication, didRegister notificationSettings: UIUserNotificationSettings) {
         // Custom code (can be empty)
     }
     
-    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         // Custom code (can be empty)
     }
     
-    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         // Custom code (can be empty)
     }
     
-    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         // Custom code (can be empty)
     }
     
-    func catapushDidConnectSuccessfully(catapush: Catapush!) {
+    func catapushDidConnectSuccessfully(_ catapush: Catapush!) {
         let connectedAV = UIAlertView( title: "Connected",
                                        message: "Catapush Connected",
                                        delegate: self,
@@ -69,19 +70,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate,CatapushDelegate,MessagesD
         connectedAV.show()
     }
     
-    func catapush(catapush: Catapush!, didFailOperation operationName: String!, withError error: NSError!) {
+    public func catapush(_ catapush: Catapush!, didFailOperation operationName: String!, withError error: Error!) {
+        let errorMessage = "The operation " + operationName + " is failed with error " + error.localizedDescription
+        let flowErrorAlertView = UIAlertView(title: "Error", message: errorMessage, delegate: self, cancelButtonTitle: "Ok")
+        flowErrorAlertView.show()
+
+    }
+
+    /*
+    func catapush(_ catapush: Catapush!, didFailOperation operationName: String!, withError error: NSError!) {
         if error.domain == CATAPUSH_ERROR_DOMAIN {
             print("Error code:\(error.code)")
         }
         let errorMessage = "The operation " + operationName + " is failed with error " + error.localizedDescription
         let flowErrorAlertView = UIAlertView(title: "Error", message: errorMessage, delegate: self, cancelButtonTitle: "Ok")
         flowErrorAlertView.show()
-    }
+    }*/
     
-    func libraryDidReceiveMessageIP(messageIP: MessageIP!) {
+    func libraryDidReceive(_ messageIP: MessageIP!) {
         MessageIP.sendMessageReadNotification(messageIP)
         for message in Catapush.allMessages() {
-            print("Message: \(message.body)")
+            print("Message: \((message as AnyObject).body)")
         }
     }
 }
