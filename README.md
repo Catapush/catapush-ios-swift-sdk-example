@@ -11,29 +11,31 @@ This project shows how quickly Catapush iOS SDK can be integrated into your curr
 
 
 ##Usage
+*ATTENTION*: this procedure works only if you are NOT using the "use_frameworks!" flag, if you need it look at the dedicated section [Manual library integration when using use_frameworks!](#manual-library-integration-when-using-use_frameworks)
 
 1. sudo gem install cocoapods (IMPORTANT: run it also if you have already installed cocoapods)
 2. git clone https://github.com/Catapush/catapush-ios-swift-sdk-example.git
 3. cd catapush-ios-swift-sdk-example
-4. pod install (this works only if you are NOT using use_frameworks! for more info look below)
+4. pod install 
 5. open catapush-ios-swift-sdk-example.xcworkspace
 6. Get your App Key from [Catapush Dashboard](http://www.catapush.com) from the left menu in "Your APP" -> App details 
 7. Create the first user from "Your APP" -> User
 8. Insert the App Key and the user credentials into your application delegate (catapush-ios-swift-sdk-example/catapush-ios-swift-sdk-example/AppDelegate.swift) :
 ```ruby
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         Catapush.setAppKey("xxxxxxxxxxxxxxxxxxxxxxxxxxx")
         
         Catapush.registerUserNotification(self, voIPDelegate: nil)
         
-        Catapush.startWithIdentifier("test", andPassword: "test")
+        Catapush.start(withIdentifier: "test", andPassword: "test")
         
         Catapush.setupCatapushStateDelegate(self, andMessagesDispatcherDelegate: self)
         
         application.applicationIconBadgeNumber = 0;
         return true
     }
+
 ```
 9. Run the app
 10. Back to your [Catapush Dashboard](http://www.catapush.com) and send a test message from "Your APP" -> Send Push.
@@ -137,11 +139,11 @@ From Project settings, select your target, and go to the "Build Phases" tab. Und
     * libresolv
 
 6. From XCode create a new File -> header, call it ```<projectname>-Bridging-Header.h``` and add 
-```#import "CatapushHeaders.h"```  like in https://raw.githubusercontent.com/Catapush/catapush-ios-swift-sdk-example/master/catapush-ios-swift-sdk-example-Bridging-Header.h
+```#import "CatapushHeaders.h"``` like in this [Bridging-Header.h example](https://raw.githubusercontent.com/Catapush/catapush-ios-swift-sdk-example/master/catapush-ios-swift-sdk-example-Bridging-Header.h)
 
 7. Set Build Settings
 Go ahead to "Build Settings", select "All" tab
     * Find "Linking" section and fill "Other Linker Flags" with: -ObjC -lxml2
     * Find "Swift Compiler - General" and fill "Objective-C Bridging Header" with: ```<projectname>-Bridging-Header.h```
 
-8. You can copy/paste the AppDelegate from https://raw.githubusercontent.com/Catapush/catapush-ios-swift-sdk-example/master/catapush-ios-swift-sdk-example/AppDelegate.swift to your project
+8. You can copy/paste the AppDelegate from [AppDelegate.swift](https://raw.githubusercontent.com/Catapush/catapush-ios-swift-sdk-example/master/catapush-ios-swift-sdk-example/AppDelegate.swift) to your project
