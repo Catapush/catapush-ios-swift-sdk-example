@@ -130,20 +130,18 @@ Since our library isn't a framework you cannot ```use use_frameworks!``` in your
 
 5. Add Dependencies
 From Project settings, select your target, and go to the "Build Phases" tab. Under "Link Binary With Libraries" use the + button to add the following Frameworks to your project:
-* Security.framework
-* CFNetwork.framework
-* SystemConfiguration.framework
-* CoreData.framework
-* libresolv
+    * Security.framework
+    * CFNetwork.framework
+    * SystemConfiguration.framework
+    * CoreData.framework
+    * libresolv
 
-6. From XCode create a new File -> header, call it <projectname>-Bridging-Header.h and add 
-```#import "CatapushHeaders.h"```  like
-https://raw.githubusercontent.com/Catapush/catapush-ios-swift-sdk-example/master/catapush-ios-swift-sdk-example-Bridging-Header.h
+6. From XCode create a new File -> header, call it ```<projectname>-Bridging-Header.h``` and add 
+```#import "CatapushHeaders.h"```  like in https://raw.githubusercontent.com/Catapush/catapush-ios-swift-sdk-example/master/catapush-ios-swift-sdk-example-Bridging-Header.h
 
 7. Set Build Settings
 Go ahead to "Build Settings", select "All" tab
-* Find "Linking" section and fill "Other Linker Flags" with:
-    -ObjC -lxml2
-* Find "Swift Compiler - General" and fill "Objective-C Bridging Header" with <projectname>-Bridging-Header.h
+    * Find "Linking" section and fill "Other Linker Flags" with: -ObjC -lxml2
+    * Find "Swift Compiler - General" and fill "Objective-C Bridging Header" with: ```<projectname>-Bridging-Header.h```
 
 8. You can copy/paste the AppDelegate from https://raw.githubusercontent.com/Catapush/catapush-ios-swift-sdk-example/master/catapush-ios-swift-sdk-example/AppDelegate.swift to your project
