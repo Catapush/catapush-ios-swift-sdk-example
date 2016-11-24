@@ -24,11 +24,11 @@ This project shows how quickly Catapush iOS SDK can be integrated into your curr
 ```ruby
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        Catapush.setAppKey("xxxxxxxxxxxxxxxxxxxxxxxxxxx")
+        Catapush.setAppKey("INSERT_YOU_APPKEY_HERE")
         
         Catapush.registerUserNotification(self, voIPDelegate: nil)
         
-        Catapush.start(withIdentifier: "test", andPassword: "test")
+        Catapush.start(withIdentifier: "INSERT_THE_USER_USERNAME_HERE", andPassword: "INSERT_THE_USER_PASSWORD_HERE")
         
         Catapush.setupCatapushStateDelegate(self, andMessagesDispatcherDelegate: self)
         
@@ -138,8 +138,10 @@ From Project settings, select your target, and go to the "Build Phases" tab. Und
     * CoreData.framework
     * libresolv
 
-6. From XCode create a new File -> header, call it ```<projectname>-Bridging-Header.h``` and add 
-```#import "CatapushHeaders.h"``` like in this [Bridging-Header.h example](https://raw.githubusercontent.com/Catapush/catapush-ios-swift-sdk-example/master/catapush-ios-swift-sdk-example-Bridging-Header.h)
+6. From XCode create a new File -> header, call it ```<projectname>-Bridging-Header.h``` and add this instruction like in this [Bridging-Header.h example](https://raw.githubusercontent.com/Catapush/catapush-ios-swift-sdk-example/master/catapush-ios-swift-sdk-example-Bridging-Header.h)
+```ruby
+#import "CatapushHeaders.h"
+```
 
 7. Set Build Settings
 Go ahead to "Build Settings", select "All" tab
