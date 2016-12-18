@@ -22,20 +22,30 @@ This project shows how quickly Catapush iOS SDK can be integrated into your curr
 7. Create the first user from "Your APP" -> User
 8. Insert the App Key and the user credentials into your application delegate (catapush-ios-swift-sdk-example/catapush-ios-swift-sdk-example/AppDelegate.swift) :
 ```ruby
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        Catapush.setAppKey("INSERT_YOU_APPKEY_HERE")
+        Catapush.setAppKey("xxxxxxxxxxxxxx")
+        
+        Catapush.setIdentifier("test", andPassword: "test")
         
         Catapush.registerUserNotification(self, voIPDelegate: nil)
         
-        Catapush.start(withIdentifier: "INSERT_THE_USER_USERNAME_HERE", andPassword: "INSERT_THE_USER_PASSWORD_HERE")
-        
         Catapush.setupCatapushStateDelegate(self, andMessagesDispatcherDelegate: self)
         
+        do {
+            
+            try  Catapush.start()
+            
+        } catch let error as NSError {
+            
+            print("Error: \(error.localizedDescription)")
+            
+        }
+        
         application.applicationIconBadgeNumber = 0;
+        
         return true
     }
-
 ```
 9. Run the app
 10. Back to your [Catapush Dashboard](http://www.catapush.com) and send a test message from "Your APP" -> Send Push.
