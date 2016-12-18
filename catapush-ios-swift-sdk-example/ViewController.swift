@@ -53,7 +53,7 @@ class ViewController: UIViewController,
             for: indexPath) as! MessageCollectionViewCell
         let messageIP = self.fetchedResultsController.object(at: indexPath) as! MessageIP
         messageCell.messageTextView.text = messageIP.body
-        if let previousDate = self.previousDate(message: messageIP, indexPath: indexPath) {
+        if let previousDate = self.previousDate(messageIP, indexPath: indexPath) {
             messageCell.setTimestamp(previousDate)
         }
         return messageCell
@@ -78,7 +78,7 @@ class ViewController: UIViewController,
 
         let messageIP = self.fetchedResultsController.object(at: indexPath) as! MessageIP
         let size = CGSize(width:collectionView.frame.size.width,height:CGFloat.greatestFiniteMagnitude)
-        let showTimestamp:Bool = (self.previousDate(message: messageIP, indexPath: indexPath) != nil)
+        let showTimestamp:Bool = (self.previousDate(messageIP, indexPath: indexPath) != nil)
         let cellSize = MessageCollectionViewCell.sizeThatFits(size,text:messageIP.body,showTimestamp:showTimestamp)
         return CGSize(width:self.collectionView.frame.size.width,height: cellSize.height)
     }
@@ -100,11 +100,11 @@ class ViewController: UIViewController,
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         self.collectionView.reloadData()
         for message in self.fetchedResultsController.fetchedObjects! {
-            self.markMessageIPAsReadIfNeeded(messageIP: message as! MessageIP)
+            self.markMessageIPAsReadIfNeeded(message as! MessageIP)
         }
     }
 
-    func markMessageIPAsReadIfNeeded(messageIP:MessageIP) {
+    func markMessageIPAsReadIfNeeded(_ messageIP:MessageIP) {
         if messageIP.status.intValue == MESSAGEIP_STATUS.MessageIP_NOT_READ.rawValue {
             messageIP.status = NSNumber(value: MESSAGEIP_STATUS.MessageIP_READ.rawValue)
             MessageIP.sendMessageReadNotification(messageIP)
@@ -121,7 +121,7 @@ class ViewController: UIViewController,
         }
         DispatchQueue.main.async {
             for message in self.fetchedResultsController.fetchedObjects! {
-                self.markMessageIPAsReadIfNeeded(messageIP: message as! MessageIP)
+                self.markMessageIPAsReadIfNeeded(message as! MessageIP)
             }
             self.collectionView.reloadData()
         }
@@ -131,7 +131,7 @@ class ViewController: UIViewController,
         Return previous date of message is 5 min
     
     */
-    func previousDate(message:MessageIP,indexPath:IndexPath) -> Date! {
+    func previousDate(_ message:MessageIP,indexPath:IndexPath) -> Date! {
         if (indexPath.item > 0) {
             let prevIndex = IndexPath(item: indexPath.row - 1, section: indexPath.section)
             let prevMsg:MessageIP = self.fetchedResultsController.object(at: prevIndex) as! MessageIP

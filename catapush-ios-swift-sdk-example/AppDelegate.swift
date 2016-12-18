@@ -20,13 +20,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate,CatapushDelegate,MessagesD
         
         Catapush.setAppKey("xxxxxxxxxxxxxx")
         
-        Catapush.registerUserNotification(self, voIPDelegate: nil)
+        Catapush.setIdentifier("test", andPassword: "test")
         
-        Catapush.start(withIdentifier: "test", andPassword: "test")
+        Catapush.registerUserNotification(self, voIPDelegate: nil)
         
         Catapush.setupCatapushStateDelegate(self, andMessagesDispatcherDelegate: self)
         
+        do {
+            
+            try  Catapush.start()
+            
+        } catch let error as NSError {
+            
+            print("Error: \(error.localizedDescription)")
+            
+        }
+        
         application.applicationIconBadgeNumber = 0;
+        
         return true
     }
     
@@ -35,7 +46,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate,CatapushDelegate,MessagesD
     }
     
     func applicationWillEnterForeground(_ application: UIApplication) {
-        Catapush.applicationWillEnterForeground(application)
+       
+        do {
+            try Catapush.applicationWillEnterForeground(application)
+        } catch let error as NSError {
+            
+            print("Error: \(error.localizedDescription)")
+            
+        }
+
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {

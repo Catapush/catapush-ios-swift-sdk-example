@@ -9,5 +9,5 @@
 #ifndef catapush_ios_swift_sdk_example_Bridging_Header_h_h
 #define catapush_ios_swift_sdk_example_Bridging_Header_h_h
 
-#import "CatapushHeaders.h"
+#import "Catapush.h"
 #endif /* catapush_ios_swift_sdk_example_Bridging_Header_h_h */
