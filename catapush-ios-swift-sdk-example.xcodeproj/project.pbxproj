@@ -79,6 +79,7 @@
 		9D10DD881C1986C7009E610E /* catapush-ios-swift-sdk-example */ = {
 			isa = PBXGroup;
 			children = (
+				FBC6BAB51FAB74E900F3E6B8 /* catapush-ios-swift-sdk-example.entitlements */,
 				9DB47C811C19B05000E49771 /* view */,
 				9DB47C801C19B03C00E49771 /* controller */,
 				9D10DD891C1986C7009E610E /* AppDelegate.swift */,
@@ -158,6 +159,12 @@
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
+								enabled = 0;
 							};
 						};
 					};
@@ -392,6 +399,7 @@
 			baseConfigurationReference = E42BE7840CBBA428B7969ED5 /* Pods-catapush-ios-swift-sdk-example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "catapush-ios-swift-sdk-example/catapush-ios-swift-sdk-example.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "catapush-ios-swift-sdk-example/Info.plist";
