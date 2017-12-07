@@ -35,6 +35,7 @@
 		9DFABD9A1C1B07B70074BB1D /* MessageCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageCollectionView.swift; sourceTree = "<group>"; };
 		9DFABD9C1C1B283F0074BB1D /* MessageNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageNavigationBar.swift; sourceTree = "<group>"; };
 		E42BE7840CBBA428B7969ED5 /* Pods-catapush-ios-swift-sdk-example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-catapush-ios-swift-sdk-example.release.xcconfig"; path = "Pods/Target Support Files/Pods-catapush-ios-swift-sdk-example/Pods-catapush-ios-swift-sdk-example.release.xcconfig"; sourceTree = "<group>"; };
+		FBC6BAB51FAB74E900F3E6B8 /* catapush-ios-swift-sdk-example.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "catapush-ios-swift-sdk-example.entitlements"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,8 +155,9 @@
 				TargetAttributes = {
 					9D10DD851C1986C7009E610E = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = VZ77JRQQAE;
+						DevelopmentTeam = 26Z828N557;
 						LastSwiftMigration = 0810;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -208,9 +210,12 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-catapush-ios-swift-sdk-example/Pods-catapush-ios-swift-sdk-example-resources.sh",
+				"${PODS_ROOT}/catapush-ios-sdk-pod/CatapushKit/CatapushLibBundle.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -238,13 +243,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-catapush-ios-swift-sdk-example-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -378,18 +386,24 @@
 			baseConfigurationReference = 0775F01A5B9716E79CCCD803 /* Pods-catapush-ios-swift-sdk-example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "catapush-ios-swift-sdk-example/catapush-ios-swift-sdk-example.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 26Z828N557;
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"COCOAPODS=1",
 					"CATAPUSH_LOG=1",
+					"CATAPUSH_LOG=1",
 				);
 				INFOPLIST_FILE = "catapush-ios-swift-sdk-example/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.catapush.github.example;
+				PRODUCT_BUNDLE_IDENTIFIER = it.whiteworld.catapushe.xample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "3215d96a-b15e-49bc-b8ac-d2acc2c0bc61";
+				PROVISIONING_PROFILE = "dadb5be8-12a8-4c28-840b-8fceb3ee8e35";
+				PROVISIONING_PROFILE_SPECIFIER = "Catapush Test Development";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -401,12 +415,21 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "catapush-ios-swift-sdk-example/catapush-ios-swift-sdk-example.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 26Z828N557;
 				ENABLE_BITCODE = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"CATAPUSH_LOG=1",
+				);
 				INFOPLIST_FILE = "catapush-ios-swift-sdk-example/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.catapush.github.example;
+				PRODUCT_BUNDLE_IDENTIFIER = it.whiteworld.catapushe.xample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "3215d96a-b15e-49bc-b8ac-d2acc2c0bc61";
+				PROVISIONING_PROFILE = "8b453398-8171-4047-a3ac-b42e415d6590";
+				PROVISIONING_PROFILE_SPECIFIER = "Catapush Test Production";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

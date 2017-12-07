@@ -10,11 +10,9 @@ import UIKit
 import Foundation
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate,CatapushDelegate,MessagesDispatchDelegate,UIAlertViewDelegate {
-   
-    
+class AppDelegate: UIResponder, UIApplicationDelegate, CatapushDelegate, MessagesDispatchDelegate, UIAlertViewDelegate, VoIPNotificationDelegate {
+
     var window: UIWindow?
-    
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
@@ -22,18 +20,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate,CatapushDelegate,MessagesD
         
         Catapush.setIdentifier("test", andPassword: "test")
         
-        Catapush.registerUserNotification(self, voIPDelegate: nil)
-        
         Catapush.setupCatapushStateDelegate(self, andMessagesDispatcherDelegate: self)
         
-        do {
-            
-            try  Catapush.start()
-            
-        } catch let error as NSError {
-            
+        // If you set voipDelegate to nil a Local Notification will be fired before the method
+        // didReceiveIncomingPush is invoked.
+        Catapush.registerUserNotification(self, voIPDelegate: self)
+
+        UIApplication.shared.registerForRemoteNotifications()
+
+        var error: NSError?
+        Catapush.start(&error)
+
+        if let error = error {
+            // Handle error...
             print("Error: \(error.localizedDescription)")
-            
         }
         
         application.applicationIconBadgeNumber = 0;
@@ -41,20 +41,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate,CatapushDelegate,MessagesD
         return true
     }
     
+    func didReceiveIncomingPush(with payload: PKPushPayload!) {
+        print("didReceiveIncomingPush invoked")
+    }
+
     func applicationDidEnterBackground(_ application: UIApplication) {
         Catapush.applicationDidEnterBackground(application)
     }
     
     func applicationWillEnterForeground(_ application: UIApplication) {
-       
-        do {
-            try Catapush.applicationWillEnterForeground(application)
-        } catch let error as NSError {
-            
+        var error: NSError?
+        Catapush.applicationWillEnterForeground(application, withError: &error)
+        
+        if let error = error {
+            // Handle error...
             print("Error: \(error.localizedDescription)")
-            
         }
-
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
@@ -93,7 +95,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,CatapushDelegate,MessagesD
         let errorMessage = "The operation " + operationName + " is failed with error " + error.localizedDescription
         let flowErrorAlertView = UIAlertView(title: "Error", message: errorMessage, delegate: self, cancelButtonTitle: "Ok")
         flowErrorAlertView.show()
-
     }
 
     /*
@@ -108,9 +109,54 @@ class AppDelegate: UIResponder, UIApplicationDelegate,CatapushDelegate,MessagesD
     
     func libraryDidReceive(_ messageIP: MessageIP!) {
         MessageIP.sendMessageReadNotification(messageIP)
+        print("Single message: \(messageIP.body)")
+        print("---All Messages---")
         for message in Catapush.allMessages() {
             print("Message: \((message as AnyObject).body)")
         }
+    }
+}
+
+extension AppDelegate: PKPushRegistryDelegate {
+
+    @available(iOS 8.0, *)
+    func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, forType type: PKPushType) {
+        let payloadDict = payload.dictionaryPayload["aps"] as? Dictionary<String, String>
+        let message = payloadDict?["alert"]
+        
+        //present a local notifcation to visually see when we are recieving a VoIP Notification
+        if UIApplication.shared.applicationState == UIApplicationState.background {
+            
+            let localNotification = UILocalNotification();
+            localNotification.alertBody = message
+            localNotification.applicationIconBadgeNumber = 1;
+            localNotification.soundName = UILocalNotificationDefaultSoundName;
+            
+            UIApplication.shared.presentLocalNotificationNow(localNotification);
+        }
+            
+        else {
+            
+            DispatchQueue.main.async(execute: { () -> Void in
+                
+                let alert = UIAlertView(title: "VoIP Notification", message: message, delegate: nil, cancelButtonTitle: "Ok");
+                alert.show()
+            })
+        }
+        
+        NSLog("incoming voip notfication: \(payload.dictionaryPayload)")
+    }
+
+    
+    func pushRegistry(_ registry: PKPushRegistry, didUpdate pushCredentials: PKPushCredentials, forType type: PKPushType) {
+        
+        //print out the VoIP token. We will use this to test the notification.
+        print("voip token: \(pushCredentials.token)")
+    }
+    
+    private func pushRegistry(registry: PKPushRegistry!, didInvalidatePushTokenForType type: String!) {
+        
+        NSLog("token invalidated")
     }
 }
 
