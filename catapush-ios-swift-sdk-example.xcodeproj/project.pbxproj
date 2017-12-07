@@ -400,7 +400,7 @@
 				);
 				INFOPLIST_FILE = "catapush-ios-swift-sdk-example/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = it.whiteworld.catapushe.xample;
+				PRODUCT_BUNDLE_IDENTIFIER = com.catapush.github.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "dadb5be8-12a8-4c28-840b-8fceb3ee8e35";
 				PROVISIONING_PROFILE_SPECIFIER = "Catapush Test Development";
@@ -426,7 +426,7 @@
 				);
 				INFOPLIST_FILE = "catapush-ios-swift-sdk-example/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = it.whiteworld.catapushe.xample;
+				PRODUCT_BUNDLE_IDENTIFIER = com.catapush.github.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "8b453398-8171-4047-a3ac-b42e415d6590";
 				PROVISIONING_PROFILE_SPECIFIER = "Catapush Test Production";
