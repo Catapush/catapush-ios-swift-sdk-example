@@ -22,24 +22,23 @@ This project shows how quickly Catapush iOS SDK can be integrated into your curr
 7. Create the first user from "Your APP" -> User
 8. Insert the App Key and the user credentials into your application delegate (catapush-ios-swift-sdk-example/catapush-ios-swift-sdk-example/AppDelegate.swift) :
 ```ruby
-   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         Catapush.setAppKey("xxxxxxxxxxxxxx")
         
         Catapush.setIdentifier("test", andPassword: "test")
         
-        Catapush.registerUserNotification(self, voIPDelegate: nil)
-        
         Catapush.setupCatapushStateDelegate(self, andMessagesDispatcherDelegate: self)
         
-        do {
-            
-            try  Catapush.start()
-            
-        } catch let error as NSError {
-            
+        // If you set voipDelegate to nil a Local Notification will be fired before the method
+        // didReceiveIncomingPush is invoked.
+        Catapush.registerUserNotification(self, voIPDelegate: self)
+
+        var error: NSError?
+        Catapush.start(&error)
+
+        if let error = error {
             print("Error: \(error.localizedDescription)")
-            
         }
         
         application.applicationIconBadgeNumber = 0;
@@ -96,35 +95,35 @@ You can easily configure the UI appearance by changing TextFont, Background colo
     MessageCollectionViewCell.cornerRadius = 10
     MessageCollectionViewCell.borderColor = UIColor(white:0,alpha:0.2)
     MessageCollectionViewCell.borderWidth = 0.5
-    MessageCollectionViewCell.textColor = UIColor.whiteColor()
-    MessageCollectionViewCell.backgroundColor = UIColor.lightGrayColor()
+    MessageCollectionViewCell.textColor = UIColor.white
+    MessageCollectionViewCell.backgroundColor = UIColor.lightGray
     MessageCollectionViewCell.textFont = UIFont(name:"HelveticaNeue",size:18)!
-    MessageNavigationBar.barTintColor = UIColor.redColor()
+    MessageNavigationBar.barTintColor = UIColor.red
     MessageNavigationBar.titleTextAttributes = [
-    		NSForegroundColorAttributeName	: UIColor.greenColor(),
-                NSFontAttributeName		: UIFont(name:"HelveticaNeue-CondensedBlack", size:21.0)!];
+        NSAttributedString.Key.foregroundColor    : UIColor.green,
+        NSAttributedString.Key.font        : UIFont(name:"HelveticaNeue-CondensedBlack", size:21.0)!];
 ```
 The following code shows how to change the appearance of the message bubbles and the navigation bar:
 ```ruby
-func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
      // ...
 
     MessageCollectionViewCell.cornerRadius = 2
     MessageCollectionViewCell.borderColor = UIColor(white:0,alpha:0.2)
     MessageCollectionViewCell.borderWidth = 0.5
-    MessageCollectionViewCell.textColor = UIColor.whiteColor()
-    MessageCollectionViewCell.backgroundColor = UIColor.lightGrayColor()
-
+    MessageCollectionViewCell.textColor = UIColor.white
+    MessageCollectionViewCell.backgroundColor = UIColor.lightGray
+        
     let shadow = NSShadow()
     shadow.shadowColor = UIColor(white:0,alpha:0.8)
-    shadow.shadowOffset = CGSizeMake(0, 1)
-    MessageNavigationBar.barTintColor = UIColor.redColor()
+    shadow.shadowOffset = CGSize(width: 0, height: 1)
+    MessageNavigationBar.barTintColor = UIColor.red
     MessageNavigationBar.titleTextAttributes = [
-            NSForegroundColorAttributeName: UIColor(red:245.0/255.0,green:245.0/255.0,blue:255.0/255.0,alpha:1),
-            NSFontAttributeName           : UIFont(name:"HelveticaNeue-CondensedBlack", size:21.0)!,
-            NSShadowAttributeName         : shadow
-        ]
+        NSAttributedString.Key.foregroundColor: UIColor(red:245.0/255.0,green:245.0/255.0,blue:255.0/255.0,alpha:1),
+        NSAttributedString.Key.font           : UIFont(name:"HelveticaNeue-CondensedBlack", size:21.0)!,
+        NSAttributedString.Key.shadow         : shadow
+    ]
     return true
 
 }
@@ -146,7 +145,7 @@ Since our library isn't a framework you cannot ```use use_frameworks!``` in your
 3. open your project in XCode
 4. From Finder drag this files in your project root, when asked select "Copy items if needed"
     * catapush-ios-sdk-pod/CatapushKit/libCatapushLib.a
-    * catapush-ios-sdk-pod/CatapushKit/CatapushHeaders.h
+    * catapush-ios-sdk-pod/CatapushKit/Catapush.h
     * catapush-ios-sdk-pod/CatapushKit/CatapushLibBundle.bundle
 
 5. Add Dependencies
@@ -159,7 +158,7 @@ From Project settings, select your target, and go to the "Build Phases" tab. Und
 
 6. From XCode create a new File -> header, call it ```<projectname>-Bridging-Header.h``` and add this instruction like in this [Bridging-Header.h example](https://raw.githubusercontent.com/Catapush/catapush-ios-swift-sdk-example/master/catapush-ios-swift-sdk-example-Bridging-Header.h)
 ```ruby
-#import "CatapushHeaders.h"
+#import "Catapush.h"
 ```
 
 7. Set Build Settings

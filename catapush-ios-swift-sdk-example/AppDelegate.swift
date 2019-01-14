@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CatapushDelegate, Message
 
     var window: UIWindow?
     
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         Catapush.setAppKey("xxxxxxxxxxxxxx")
         
@@ -25,8 +25,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CatapushDelegate, Message
         // If you set voipDelegate to nil a Local Notification will be fired before the method
         // didReceiveIncomingPush is invoked.
         Catapush.registerUserNotification(self, voIPDelegate: self)
-
-        UIApplication.shared.registerForRemoteNotifications()
 
         var error: NSError?
         Catapush.start(&error)
@@ -120,12 +118,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CatapushDelegate, Message
 extension AppDelegate: PKPushRegistryDelegate {
 
     @available(iOS 8.0, *)
-    func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, forType type: PKPushType) {
+    func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, for type: PKPushType) {
         let payloadDict = payload.dictionaryPayload["aps"] as? Dictionary<String, String>
         let message = payloadDict?["alert"]
         
         //present a local notifcation to visually see when we are recieving a VoIP Notification
-        if UIApplication.shared.applicationState == UIApplicationState.background {
+        if UIApplication.shared.applicationState == UIApplication.State.background {
             
             let localNotification = UILocalNotification();
             localNotification.alertBody = message
@@ -148,7 +146,7 @@ extension AppDelegate: PKPushRegistryDelegate {
     }
 
     
-    func pushRegistry(_ registry: PKPushRegistry, didUpdate pushCredentials: PKPushCredentials, forType type: PKPushType) {
+    func pushRegistry(_ registry: PKPushRegistry, didUpdate pushCredentials: PKPushCredentials, for type: PKPushType) {
         
         //print out the VoIP token. We will use this to test the notification.
         print("voip token: \(pushCredentials.token)")

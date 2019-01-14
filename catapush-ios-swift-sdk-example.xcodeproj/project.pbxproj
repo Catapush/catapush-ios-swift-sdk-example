@@ -131,7 +131,6 @@
 				9D10DD821C1986C7009E610E /* Sources */,
 				9D10DD831C1986C7009E610E /* Frameworks */,
 				9D10DD841C1986C7009E610E /* Resources */,
-				6C633515FCC88E6B01828FF3 /* [CP] Embed Pods Frameworks */,
 				0689A55EA798BFC755B84F7D /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -156,7 +155,7 @@
 					9D10DD851C1986C7009E610E = {
 						CreatedOnToolsVersion = 7.1.1;
 						DevelopmentTeam = 26Z828N557;
-						LastSwiftMigration = 0810;
+						LastSwiftMigration = 1010;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -215,26 +214,11 @@
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/CatapushLibBundle.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-catapush-ios-swift-sdk-example/Pods-catapush-ios-swift-sdk-example-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		6C633515FCC88E6B01828FF3 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-catapush-ios-swift-sdk-example/Pods-catapush-ios-swift-sdk-example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		7F7EBD073357CD31D0BCC529 /* [CP] Check Pods Manifest.lock */ = {
@@ -404,7 +388,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "dadb5be8-12a8-4c28-840b-8fceb3ee8e35";
 				PROVISIONING_PROFILE_SPECIFIER = "Catapush Test Development";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -430,7 +414,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "8b453398-8171-4047-a3ac-b42e415d6590";
 				PROVISIONING_PROFILE_SPECIFIER = "Catapush Test Production";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
