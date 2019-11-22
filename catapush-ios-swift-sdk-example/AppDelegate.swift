@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CatapushDelegate, Message
         
         Catapush.setupCatapushStateDelegate(self, andMessagesDispatcherDelegate: self)
         
-        Catapush.registerUserNotification(self, voIPDelegate: nil)
+        Catapush.registerUserNotification(self)
 
         var error: NSError?
         Catapush.start(&error)
