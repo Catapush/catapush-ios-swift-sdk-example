@@ -30,7 +30,7 @@ This project shows how quickly Catapush iOS SDK can be integrated into your curr
         
         Catapush.setupCatapushStateDelegate(self, andMessagesDispatcherDelegate: self)
         
-        Catapush.registerUserNotification(self, voIPDelegate: nil)
+        Catapush.registerUserNotification(self)
 
         var error: NSError?
         Catapush.start(&error)
