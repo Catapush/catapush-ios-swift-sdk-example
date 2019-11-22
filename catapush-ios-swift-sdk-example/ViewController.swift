@@ -33,6 +33,18 @@ class ViewController: UIViewController,
         self.perfomFetch()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.perfomFetch), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.fetchedResultsController.delegate = nil
+        NotificationCenter.default.removeObserver(self)
+        NotificationCenter.default.addObserver(self, selector:  #selector(self.perfomFetch), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         var items = 0;
         if let sections = self.fetchedResultsController.sections {
@@ -112,7 +124,7 @@ class ViewController: UIViewController,
         }
     }
     
-    func perfomFetch() {
+    @objc func perfomFetch() {
         self.fetchedResultsController.delegate = self;
         do {
             try self.fetchedResultsController.performFetch()
