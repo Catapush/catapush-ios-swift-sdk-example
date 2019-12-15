@@ -41,6 +41,9 @@ class NotificationService: CatapushNotificationServiceExtension {
            if (error._code == CatapushNoMessagesError) {
                bestAttemptContent.body = "No new message";
            }
+            if (error._code == CatapushFileProtectionError) {
+                bestAttemptContent.body = "Unlock the device at least once to receive the message";
+            }
            contentHandler(bestAttemptContent);
         }
     }
