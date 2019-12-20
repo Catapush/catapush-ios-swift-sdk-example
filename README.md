@@ -167,7 +167,7 @@ Since our library isn't a framework you cannot ```use use_frameworks!``` in your
 *ATTENTION*: this steps doesn't works in our example project, you have to create a new empty project or include it in your project
 
 1. cd ~
-2. git clone git@github.com:Catapush/catapush-ios-sdk-pod.git
+2. git clone https://github.com/Catapush/catapush-ios-sdk-pod.git
 3. open your project in XCode
 4. From Finder drag this files in your project root, when asked select "Copy items if needed"
     * catapush-ios-sdk-pod/CatapushKit/libCatapushLib.a
