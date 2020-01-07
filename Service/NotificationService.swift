@@ -36,7 +36,7 @@ class NotificationService: CatapushNotificationServiceExtension {
                bestAttemptContent.body = "User not logged in";
            }
            if (error._code == CatapushNetworkError) {
-               bestAttemptContent.body = "Newtork error";
+               bestAttemptContent.body = "Network error";
            }
            if (error._code == CatapushNoMessagesError) {
                bestAttemptContent.body = "No new message";
