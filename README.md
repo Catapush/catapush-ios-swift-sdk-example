@@ -1,27 +1,23 @@
-# catapush-ios-swift-sdk-example
-Catapush sdk iOS App Example written in Swift
-
 ![Catapush Logo](https://github.com/Catapush/catapush-ios-swift-sdk-example/blob/master/catapush_logo.png)
 
-# Catapush iOS SDK Example
+# Catapush iOS Swift SDK Example
 
-This project shows how quickly Catapush iOS SDK can be integrated into your current app to receive Catapush messages and display them with a customizable bubble layout. For more information about Catapush platform check out the official website: [Catapush - reliable push notification service](http://www.catapush.com).
+This project shows how Catapush iOS SDK can be integrated to receive Catapush messages and display them with a customizable bubble layout. For more information about Catapush platform check out the official website: [Catapush - reliable push notification service](http://www.catapush.com).
 
 ![alt tag](https://github.com/Catapush/catapush-ios-swift-sdk-example/blob/master/catapush_screen_shot.jpg)
 
 
-##Usage
-*ATTENTION*: this procedure works only if you are NOT using the "use_frameworks!" flag, if you need it look at the dedicated section [Manual library integration when using use_frameworks!](#manual-library-integration-when-using-use_frameworks)
+## Usage
 
-1. sudo gem install cocoapods (IMPORTANT: run it also if you have already installed cocoapods)
+1. sudo gem install cocoapods
 2. git clone https://github.com/Catapush/catapush-ios-swift-sdk-example.git
 3. cd catapush-ios-swift-sdk-example
-4. pod install 
+4. pod install
 5. open catapush-ios-swift-sdk-example.xcworkspace
 6. Get your App Key from [Catapush Dashboard](http://www.catapush.com) from the left menu in "Your APP" -> App details 
 7. Create the first user from "Your APP" -> User
 8. Insert the App Key and the user credentials into your application delegate (catapush-ios-swift-sdk-example/catapush-ios-swift-sdk-example/AppDelegate.swift) :
-```ruby
+```swift
    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         Catapush.setAppKey("xxxxxxxxxxxxxx")
@@ -46,43 +42,45 @@ This project shows how quickly Catapush iOS SDK can be integrated into your curr
         return true
     }
 ```
-9. Run the app
-10. Back to your [Catapush Dashboard](http://www.catapush.com) and send a test message from "Your APP" -> Send Push.
+9. Set you Team under Signing & Capabilities and change the bundle it to a unique one.
+10. Configure the [App Groups](https://github.com/Catapush/catapush-ios-swift-sdk-example#appgroups)
+11. [Create an Apple authentication key](https://github.com/Catapush/catapush-ios-swift-sdk-example#create-and-configure-the-authentication-key) in order to be able to send push notifications and configure your Catapush application in the [Catapush Dashboard](http://www.catapush.com)
+13. Run the app
+14. Back to your [Catapush Dashboard](http://www.catapush.com) and send a test message from "Your APP" -> Send Push.
 
 
-Note: Catapush DOES register user notification for you, so *DO NOT* register user notification by calling instance method of ```UIApplication```.
-
-
-# Prerequisites
-These are pre-requisites for setting up your application with Catapush.
 ## Certificate, App Id, Push Entitlements and App Groups
 * Make sure your app has an explicit app id and push entitlements in Apple's Developer Portal.
 * Create an Apple Push Notification Authentication Key and configure your Catapush applicaton hosted on [Catapush servers](http://www.catapush.com).
 * Create a specific App Group for the iOS Application and the Notification Service Extension.
 
 ### Create and configure the authentication key
+
 This section describes how to generate an authentication key for an App ID enabled for Push Notifications. If you have an existing key, you can use that key instead of generating a new one.
 
 To create an authentication key:
 1) In your [Apple Developer Member Center](https://developer.apple.com/account), go to Certificates, Identifiers & Profiles, and select Keys.
-2) Click the Add button (+) in the upper-right corner.
+2) Click the Add button (+) or click the "Create a key" button.
+<img src="https://github.com/Catapush/catapush-ios-sdk-pod/blob/master/images/auth_key_1.png">
 3) Enter a description for the APNs Auth Key.
 4) Under Key Services, select the Apple Push Notifications service (APNs) checkbox, and click Continue.
-5) Click Confirm and then Download. Save your key in a secure place. This is a one-time download, and the key cannot be retrieved later.
+<img src="https://github.com/Catapush/catapush-ios-sdk-pod/blob/master/images/auth_key_2.png">
+5) Click Register and then download and save your key in a secure place. This is a one-time download, and the key cannot be retrieved later.
+<img src="https://github.com/Catapush/catapush-ios-sdk-pod/blob/master/images/auth_key_3.png">
 
 Once you have download it you have to configure your Catapush application.
 1) Go to https://www.catapush.com/panel/apps/YOUR_APP_ID/platforms.
 2) Click on iOS Token Based to enable it.
 3) Fill iOS Team Id, iOS Key Id, iOS AuthKey and iOS Topic.
 
-The iOS Team Id can be found here https://developer.apple.com/account/#/membership in "Membership Information" section.
+The iOS **Team Id** can be found here https://developer.apple.com/account/#/membership in "Membership Information" section.
 
-The iOS Key Id can be retrieved here https://developer.apple.com/account/resources/authkeys/list, click on the key you have created and you can find it under "View Key Details" section.
+The iOS **Key Id** can be retrieved here https://developer.apple.com/account/resources/authkeys/list, click on the key you have created and you can find it under "View Key Details" section.
 
-The iOS AuthKey is the content of the key file.
+The iOS **AuthKey** is the content of the key file.
 
 Example:
-```ruby
+```
 -----BEGIN PRIVATE KEY-----
 ...........................
           AUTH_KEY
@@ -92,28 +90,25 @@ Example:
 
 The iOS Topic is the bundle identifier of your iOS application.
 
-![alt tag](https://github.com/Catapush/catapush-ios-sdk-pod/blob/master/images/catapush_ios_token_based.png)
+<img src="https://github.com/Catapush/catapush-ios-sdk-pod/blob/master/images/catapush_ios_token_based.png" width="200">
 
-### Notification Service Extension
-In order to process the push notification a Notification Service Extension is required.
-An example is already implemented.
 
-### AppGroups
+## App Groups
 Catapush need that the Notification Service Extension and the main application can share resources.
 In order to do that you have to create and enable a specific app group for both the application and the extension.
-The app and the extansion must be in the same app group.
-![alt tag](https://github.com/Catapush/catapush-ios-sdk-pod/blob/master/images/appgroup_1.png)
-![alt tag](https://github.com/Catapush/catapush-ios-sdk-pod/blob/master/images/appgroup_2.png)
-![alt tag](https://github.com/Catapush/catapush-ios-sdk-pod/blob/master/images/catapush_ios_token_based.png)
+The app and the extension must be in the same app group.
+<img src="https://github.com/Catapush/catapush-ios-sdk-pod/blob/master/images/appgroup_1.png">
+<img src="https://github.com/Catapush/catapush-ios-sdk-pod/blob/master/images/appgroup_2.png">
 
-You should also add this information in the App plist and the Extension plist:
-```ruby
+You should also add this information in the App plist and the Extension plist (```group.example.group``` should match the one you used for example ```group.catapush.test``` in the screens):
+```objectivec
     <key>Catapush</key>
     <dict>
         <key>AppGroup</key>
         <string>group.catapush.test</string>
     </dict>
 ```
+
 # UI appearance
 You can easily configure the UI appearance by changing TextFont, Background color attributes. You can add this code in the method application of catapush-ios-swift-sdk-example/catapush-ios-swift-sdk-example/AppDelegate.swift 
 
@@ -156,40 +151,7 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 ```
 ![alt tag](https://github.com/Catapush/catapush-ios-swift-sdk-example/blob/master/catapush_screen_shot_custom_red.jpg)
 
-##Clipboard
+## Clipboard
 Use Long tap to copy a text into clipboard.
 
 ![alt tag](https://github.com/Catapush/catapush-ios-swift-sdk-example/blob/master/catapush_screen_shot_clipboard.jpg)
-
-## Manual library integration when using use_frameworks!
-Since our library isn't a framework you cannot ```use use_frameworks!``` in your Podfile, if you have to use this flag you have to include the library manually following this steps:
-
-*ATTENTION*: this steps doesn't works in our example project, you have to create a new empty project or include it in your project
-
-1. cd ~
-2. git clone https://github.com/Catapush/catapush-ios-sdk-pod.git
-3. open your project in XCode
-4. From Finder drag this files in your project root, when asked select "Copy items if needed"
-    * catapush-ios-sdk-pod/CatapushKit/libCatapushLib.a
-    * catapush-ios-sdk-pod/CatapushKit/Catapush.h
-    * catapush-ios-sdk-pod/CatapushKit/CatapushLibBundle.bundle
-
-5. Add Dependencies
-From Project settings, select your target, and go to the "Build Phases" tab. Under "Link Binary With Libraries" use the + button to add the following Frameworks to your project:
-    * Security.framework
-    * CFNetwork.framework
-    * SystemConfiguration.framework
-    * CoreData.framework
-    * libresolv
-
-6. From XCode create a new File -> header, call it ```<projectname>-Bridging-Header.h``` and add this instruction like in this [Bridging-Header.h example](https://raw.githubusercontent.com/Catapush/catapush-ios-swift-sdk-example/master/catapush-ios-swift-sdk-example-Bridging-Header.h)
-```ruby
-#import "Catapush.h"
-```
-
-7. Set Build Settings
-Go ahead to "Build Settings", select "All" tab
-    * Find "Linking" section and fill "Other Linker Flags" with: -ObjC -lxml2
-    * Find "Swift Compiler - General" and fill "Objective-C Bridging Header" with: ```<projectname>-Bridging-Header.h```
-
-8. You can copy/paste the AppDelegate from [AppDelegate.swift](https://raw.githubusercontent.com/Catapush/catapush-ios-swift-sdk-example/master/catapush-ios-swift-sdk-example/AppDelegate.swift) to your project
