@@ -43,7 +43,7 @@ This project shows how Catapush iOS SDK can be integrated to receive Catapush me
     }
 ```
 9. Set you Team under Signing & Capabilities and change the bundle it to a unique one.
-10. Configure the [App Groups](https://github.com/Catapush/catapush-ios-swift-sdk-example#appgroups)
+10. Configure the [App Groups](https://github.com/Catapush/catapush-ios-swift-sdk-example#app-groups)
 11. [Create an Apple authentication key](https://github.com/Catapush/catapush-ios-swift-sdk-example#create-and-configure-the-authentication-key) in order to be able to send push notifications and configure your Catapush application in the [Catapush Dashboard](http://www.catapush.com)
 13. Run the app
 14. Back to your [Catapush Dashboard](http://www.catapush.com) and send a test message from "Your APP" -> Send Push.
