@@ -10,42 +10,44 @@ import UserNotifications
 
 class NotificationService: CatapushNotificationServiceExtension {
     
-    private var contentHandler: ((UNNotificationContent) -> Void)?
-    private var bestAttemptContent: UNMutableNotificationContent?
-    
     override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
-        self.contentHandler = contentHandler;
-        self.bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
         super.didReceive(request, withContentHandler: contentHandler)
     }
-    
-    override func handleMessage(_ message: MessageIP!) {
+
+    override func handleMessage(_ message: MessageIP?, withContentHandler contentHandler: ((UNNotificationContent?) -> Void)?, withBestAttempt bestAttemptContent: UNMutableNotificationContent?) {
         if let contentHandler = contentHandler, let bestAttemptContent = bestAttemptContent {
             if (message != nil) {
-                bestAttemptContent.body = message.body;
+                bestAttemptContent.body = message!.body;
             }else{
                 bestAttemptContent.body = "No new message";
             }
             contentHandler(bestAttemptContent);
         }
     }
-    
-    override func handleError(_ error: Error!) {
-        if let contentHandler = contentHandler, let bestAttemptContent = bestAttemptContent {
-           if (error._code == CatapushCredentialsError) {
-               bestAttemptContent.body = "User not logged in";
-           }
-           if (error._code == CatapushNetworkError) {
-               bestAttemptContent.body = "Network error";
-           }
-           if (error._code == CatapushNoMessagesError) {
-               bestAttemptContent.body = "No new message";
-           }
-            if (error._code == CatapushFileProtectionError) {
+
+    override func handleError(_ error: Error, withContentHandler contentHandler: ((UNNotificationContent?) -> Void)?, withBestAttempt bestAttemptContent: UNMutableNotificationContent?) {
+        if let contentHandler = contentHandler, let bestAttemptContent = bestAttemptContent{
+            let errorCode = (error as NSError).code
+            if (errorCode == CatapushCredentialsError) {
+                bestAttemptContent.body = "User not logged in";
+            }
+            if (errorCode == CatapushNetworkError) {
+                bestAttemptContent.body = "Network error";
+            }
+            if (errorCode == CatapushNoMessagesError) {
+                bestAttemptContent.body = "No new message";
+            }
+            if (errorCode == CatapushFileProtectionError) {
                 bestAttemptContent.body = "Unlock the device at least once to receive the message";
             }
-           contentHandler(bestAttemptContent);
+            if (errorCode == CatapushConflictErrorCode) {
+                bestAttemptContent.body = "Connected from another resource";
+            }
+            if (errorCode == CatapushAppIsActive) {
+                bestAttemptContent.body = "Please open the app to read the message";
+            }
+            contentHandler(bestAttemptContent);
         }
     }
-
+    
 }
