@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CatapushDelegate, Message
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        Catapush.setAppKey("xxxxxxxxxxxxxx")
+        Catapush.setAppKey("YOUR_APP_KEY")
         
         Catapush.setIdentifier("test", andPassword: "test")
         
@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CatapushDelegate, Message
         Catapush.start(&error)
 
         if let error = error {
-            // Handle error...
+            // API KEY, USERNAME or PASSWORD not set
             print("Error: \(error.localizedDescription)")
         }
         
