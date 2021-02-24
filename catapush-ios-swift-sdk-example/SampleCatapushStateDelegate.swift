@@ -205,7 +205,6 @@ class SampleCatapushStateDelegate : NSObject, CatapushDelegate{
                  An unexpected internal error on the remote messaging service has occurred.
                  This is probably due to a temporary service disruption.
                  */
-                self.retry(delayInSeconds: LONG_DELAY);
                 break;
             case CatapushErrorCode.NETWORK_ERROR.rawValue:
                 /*
