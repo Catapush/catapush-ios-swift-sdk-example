@@ -241,7 +241,7 @@
 					9D10DD851C1986C7009E610E = {
 						CreatedOnToolsVersion = 7.1.1;
 						DevelopmentTeam = 7K9DGKFJJH;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1240;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -613,7 +613,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.catapush.github.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -640,7 +640,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.catapush.github.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
