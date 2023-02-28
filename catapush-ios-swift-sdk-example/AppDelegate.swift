@@ -68,26 +68,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CatapushDelegate, Message
         // Custom code (can be empty)
     }
     
-    func catapushDidConnectSuccessfully(_ catapush: Catapush!) {
-        let connectedAV = UIAlertView( title: "Connected",
-                                       message: "Catapush Connected",
-                                       delegate: self,
-                                       cancelButtonTitle: "Ok")
-        connectedAV.show()
+    func catapushDidConnectSuccessfully(_ catapush: Catapush) {
+        let alert = UIAlertController(title: "Connected", message: "Catapush Connected", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default))
+        UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true)
     }
     
-    public func catapush(_ catapush: Catapush!, didFailOperation operationName: String!, withError error: Error!) {
-        let errorMessage = "The operation " + operationName + " is failed with error " + error.localizedDescription
-        let flowErrorAlertView = UIAlertView(title: "Error", message: errorMessage, delegate: self, cancelButtonTitle: "Ok")
-        flowErrorAlertView.show()
+    public func catapush(_ catapush: Catapush, didFailOperation operationName: String?, withError error: Error?) {
+        let errorMessage = "The operation " + (operationName ?? "") + " is failed with error " + (error?.localizedDescription ?? "")
+        let alert = UIAlertController(title: "Error", message: errorMessage, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default))
+        UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true)
     }
     
-    func libraryDidReceive(_ messageIP: MessageIP!) {
+    func libraryDidReceive(_ messageIP: MessageIP?) {
+        guard let messageIP else { return }
         MessageIP.sendMessageReadNotification(messageIP)
-        print("Single message: \(messageIP.body ?? "")")
+        print("Single message: \(messageIP.body)")
         print("---All Messages---")
         for message in Catapush.allMessages() {
-            print("Message: \((message as! MessageIP).body ?? "")")
+            print("Message: \((message as! MessageIP).body)")
         }
     }
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {

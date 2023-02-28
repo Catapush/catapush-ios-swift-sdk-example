@@ -12,16 +12,14 @@ class SampleCatapushStateDelegate : NSObject, CatapushDelegate{
     let LONG_DELAY =  300
     let SHORT_DELAY = 30
     
-    func catapushDidConnectSuccessfully(_ catapush: Catapush!) {
-        let connectedAV = UIAlertView( title: "Connected",
-                                       message: "Catapush Connected",
-                                       delegate: self,
-                                       cancelButtonTitle: "Ok")
-        connectedAV.show()
+    func catapushDidConnectSuccessfully(_ catapush: Catapush) {
+        let alert = UIAlertController(title: "Connected", message: "Catapush Connected", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default))
+        UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true)
     }
     
-    func catapush(_ catapush: Catapush!, didFailOperation operationName: String!, withError error: Error!) {
-        let test = CatapushErrorCode.INVALID_APP_KEY;
+    func catapush(_ catapush: Catapush, didFailOperation operationName: String?, withError error: Error?) {
+        guard let error else { return }
         let domain = (error as NSError).domain
         let code = (error as NSError).code
         if domain == CATAPUSH_ERROR_DOMAIN {
@@ -232,9 +230,11 @@ class SampleCatapushStateDelegate : NSObject, CatapushDelegate{
         DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
             var error: NSError?
             Catapush.start(&error)
+            /*
             if let error = error {
                 // API KEY, USERNAME or PASSWORD not set
             }
+            */
         }
     }
     
