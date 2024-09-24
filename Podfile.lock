@@ -1,5 +1,5 @@
 PODS:
-  - catapush-ios-sdk-pod (2.2.3)
+  - catapush-ios-sdk-pod (2.2.4)
 
 DEPENDENCIES:
   - catapush-ios-sdk-pod
@@ -9,8 +9,8 @@ SPEC REPOS:
     - catapush-ios-sdk-pod
 
 SPEC CHECKSUMS:
-  catapush-ios-sdk-pod: 3a6c129e02e7802a8aa63c28d93bbad8ddc03039
+  catapush-ios-sdk-pod: 96fb6b63d286a455824619471cebf0b3f251b3a6
 
-PODFILE CHECKSUM: 931117fe6b8292b2d74ae1d418405fada70d0d77
+PODFILE CHECKSUM: 7847fc09bb5694ff737d75abe118b48100128905
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.14.3
