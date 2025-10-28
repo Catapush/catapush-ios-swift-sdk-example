@@ -10,86 +10,36 @@ import UIKit
 import Foundation
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, CatapushDelegate, MessagesDispatchDelegate, UIAlertViewDelegate, UNUserNotificationCenterDelegate {
-
-    var window: UIWindow?
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
         Catapush.setAppKey("YOUR_APP_KEY")
-        
         Catapush.setIdentifier("test", andPassword: "test")
         
-        Catapush.setupCatapushStateDelegate(self, andMessagesDispatcherDelegate: self)
-        
         Catapush.registerUserNotification(self)
-
-        var error: NSError?
-        Catapush.start(&error)
-
-        if let error = error {
-            // API KEY, USERNAME or PASSWORD not set
-            print("Error: \(error.localizedDescription)")
-        }
         
-        application.applicationIconBadgeNumber = 0;
+        application.applicationIconBadgeNumber = 0
         UNUserNotificationCenter.current().delegate = self
-
+        
         return true
     }
     
-    func applicationDidEnterBackground(_ application: UIApplication) {
-        Catapush.applicationDidEnterBackground(application)
+    // MARK: - UISceneSession Lifecycle
+    
+    func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
+        return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
     
-    func applicationWillEnterForeground(_ application: UIApplication) {
-        var error: NSError?
-        Catapush.applicationWillEnterForeground(application, withError: &error)
-        
-        if let error = error {
-            // Handle error...
-            print("Error: \(error.localizedDescription)")
-        }
-    }
+    func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) { }
     
-    func applicationDidBecomeActive(_ application: UIApplication) {
-        Catapush.applicationDidBecomeActive(application)
-    }
+    // MARK: - Remote Notifications
     
-    func applicationWillTerminate(_ application: UIApplication) {
-        Catapush.applicationWillTerminate(application)
-    }
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) { }
     
-    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        // Custom code (can be empty)
-    }
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) { }
     
-    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        // Custom code (can be empty)
-    }
+    // MARK: - UNUserNotificationCenterDelegate
     
-    func catapushDidConnectSuccessfully(_ catapush: Catapush) {
-        let alert = UIAlertController(title: "Connected", message: "Catapush Connected", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default))
-        UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true)
-    }
-    
-    public func catapush(_ catapush: Catapush, didFailOperation operationName: String?, withError error: Error?) {
-        let errorMessage = "The operation " + (operationName ?? "") + " is failed with error " + (error?.localizedDescription ?? "")
-        let alert = UIAlertController(title: "Error", message: errorMessage, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default))
-        UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true)
-    }
-    
-    func libraryDidReceive(_ messageIP: MessageIP?) {
-        guard let messageIP else { return }
-        MessageIP.sendMessageReadNotification(messageIP)
-        print("Single message: \(messageIP.body)")
-        print("---All Messages---")
-        for message in Catapush.allMessages() {
-            print("Message: \((message as! MessageIP).body)")
-        }
-    }
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         completionHandler();
     }

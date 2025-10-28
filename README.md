@@ -6,6 +6,16 @@ This project shows how Catapush iOS SDK can be integrated to receive Catapush me
 
 ![alt tag](https://github.com/Catapush/catapush-ios-swift-sdk-example/blob/master/catapush_screen_shot.jpg)
 
+## Requirements
+
+- **iOS 15.0+**
+- **Xcode 13.0+**
+- **Swift 5.0+**
+- **CocoaPods**
+
+This example uses the iOS 13+ Scene-based application lifecycle with both AppDelegate and SceneDelegate.
+
+> **📱 Multi-Window Support**: For apps requiring multi-scene support (multiple windows on iPad), see the [Multi-Scene Integration Guide](MULTI_SCENE_INTEGRATION.md).
 
 ## Usage
 
@@ -16,32 +26,49 @@ This project shows how Catapush iOS SDK can be integrated to receive Catapush me
 5. open catapush-ios-swift-sdk-example.xcworkspace
 6. Get your App Key from [Catapush Dashboard](http://www.catapush.com) from the left menu in "Your APP" -> App details 
 7. Create the first user from "Your APP" -> User
-8. Insert the App Key and the user credentials into your application delegate (catapush-ios-swift-sdk-example/catapush-ios-swift-sdk-example/AppDelegate.swift) :
-```swift
+8. Configure your App Key and user credentials in two files:
+
+   **AppDelegate.swift** - Global configuration and push notification setup:
+   ```swift
    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
-        Catapush.setAppKey("xxxxxxxxxxxxxx")
-        
-        Catapush.setIdentifier("test", andPassword: "test")
-        
-        Catapush.setupCatapushStateDelegate(self, andMessagesDispatcherDelegate: self)
-        
-        Catapush.registerUserNotification(self)
+       // Set your Catapush credentials
+       Catapush.setAppKey("YOUR_APP_KEY")
+       Catapush.setIdentifier("test", andPassword: "test")
 
-        var error: NSError?
-        Catapush.start(&error)
+       // Register for push notifications (must be called on AppDelegate)
+       Catapush.registerUserNotification(self)
 
-        if let error = error {
-            // Handle error...
-            print("Error: \(error.localizedDescription)")
-        }
-        
-        application.applicationIconBadgeNumber = 0;
-        UNUserNotificationCenter.current().delegate = self
-        
-        return true
-    }
-```
+       application.applicationIconBadgeNumber = 0
+       UNUserNotificationCenter.current().delegate = self
+
+       return true
+   }
+   ```
+
+   **SceneDelegate.swift** - UI setup and Catapush connection:
+   ```swift
+   func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+       guard let windowScene = (scene as? UIWindowScene) else { return }
+
+       // Setup window
+       window = UIWindow(windowScene: windowScene)
+       let storyboard = UIStoryboard(name: "Main", bundle: nil)
+       window?.rootViewController = storyboard.instantiateInitialViewController()
+       window?.makeKeyAndVisible()
+
+       // Setup Catapush delegates and start connection
+       Catapush.setupCatapushStateDelegate(self, andMessagesDispatcherDelegate: self)
+
+       var error: NSError?
+       Catapush.start(&error)
+
+       if let error = error {
+           print("Error: \(error.localizedDescription)")
+       }
+   }
+   ```
+
+   > **Note:** With the iOS 13+ Scene-based lifecycle, responsibilities are split between AppDelegate (app-level setup like push notifications) and SceneDelegate (UI setup and Catapush connection).
 9. Set you Team under Signing & Capabilities and change the bundle it to a unique one.
 10. Configure the [App Groups](https://github.com/Catapush/catapush-ios-swift-sdk-example#app-groups)
 11. [Create an Apple authentication key](https://github.com/Catapush/catapush-ios-swift-sdk-example#create-and-configure-the-authentication-key) in order to be able to send push notifications and configure your Catapush application in the [Catapush Dashboard](http://www.catapush.com)
@@ -110,7 +137,9 @@ You should also add this information in the App plist and the Extension plist (`
 ```
 
 # UI appearance
-You can easily configure the UI appearance by changing TextFont, Background color attributes. You can add this code in the method application of catapush-ios-swift-sdk-example/catapush-ios-swift-sdk-example/AppDelegate.swift 
+You can easily configure the UI appearance by changing TextFont, Background color attributes.
+
+You can add this code in **AppDelegate.swift** (`application(_:didFinishLaunchingWithOptions:)` method) or in **SceneDelegate.swift** (`scene(_:willConnectTo:options:)` method before `makeKeyAndVisible()`). For UI-related configuration, SceneDelegate is the more appropriate location. 
 
 ```ruby
     MessageCollectionViewCell.cornerRadius = 10
@@ -126,9 +155,12 @@ You can easily configure the UI appearance by changing TextFont, Background colo
 ```
 The following code shows how to change the appearance of the message bubbles and the navigation bar:
 ```ruby
+// In AppDelegate.swift - application(_:didFinishLaunchingWithOptions:)
+// OR in SceneDelegate.swift - scene(_:willConnectTo:options:) before makeKeyAndVisible()
+
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
-     // ...
+     // ... your Catapush setup code ...
 
     MessageCollectionViewCell.cornerRadius = 2
     MessageCollectionViewCell.borderColor = UIColor(white:0,alpha:0.2)
@@ -155,3 +187,35 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 Use Long tap to copy a text into clipboard.
 
 ![alt tag](https://github.com/Catapush/catapush-ios-swift-sdk-example/blob/master/catapush_screen_shot_clipboard.jpg)
+
+## Migration Notes
+
+### iOS 13+ Scene Support
+
+This example app has been updated to use the iOS 13+ Scene-based lifecycl.
+
+### For Developers Using This as Reference
+
+If you're integrating Catapush into an existing app:
+
+- **With SceneDelegate:** Follow the split architecture shown in this example (AppDelegate + SceneDelegate)
+- **AppDelegate-only:** Keep all Catapush setup in AppDelegate as before (legacy approach)
+
+> **📱 Multi-Scene Support**: If your app needs to support multiple windows simultaneously (primarily on iPad), see the comprehensive [Multi-Scene Integration Guide](MULTI_SCENE_INTEGRATION.md) for architecture patterns, implementation details, and best practices.
+
+### Migration Path from AppDelegate-only to SceneDelegate
+
+If you're migrating an existing Catapush integration to use SceneDelegate:
+
+**Move to SceneDelegate:**
+- `Catapush.setupCatapushStateDelegate()` → SceneDelegate
+- `Catapush.start()` → SceneDelegate
+- Delegate conformances (`CatapushDelegate`, `MessagesDispatchDelegate`) → SceneDelegate
+- Window setup → SceneDelegate
+- Scene lifecycle calls (background/foreground) → SceneDelegate
+
+**Keep in AppDelegate:**
+- `Catapush.setAppKey()` (global configuration)
+- `Catapush.setIdentifier()` (user credentials)
+- `Catapush.registerUserNotification(self)`
+- Push notification registration methods
